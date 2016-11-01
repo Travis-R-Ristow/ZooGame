@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Zoo Game</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'Zoo_App/index.css' %}" media="screen" title="no title"  charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		// $(".hide").hide();
+		$("#dolphBTN").click(function(){
+			$("#dolph").css("opacity", "1.0");
+			$("#dolph").fadeOut(520);
+		});
+		$("#polarBTN").click(function(){
+			$("#polar").css("opacity", "1.0");
+			$("#polar").fadeOut(520);
+		});
+		$("#gorillaBTN").click(function(){
+			$("#gorilla").css("opacity", "1.0");
+			$("#gorilla").fadeOut(520);
+		});
+		$("#dinoBTN").click(function(){
+			$("#dino").css("opacity", "1.0");
+			$("#dino").fadeOut(520);
+		});
+		// $('#click').click(function(){
+		// 	$('#click').css("transition","transform .1s ease-in-out":"transform","rotate(180deg)")
+		// });
+	});
+	</script>
+</head>
+<body>
+	<div id="banner">
+		<div id="highscore">
+			<h2 style="border-right:4px solid black; margin-right: 10px; color:white; text-shadow: 1px 1px gold;">HighScore:</h2>
+			<h2>Your Score:</h2><br>
+			<h3 style="border-right:4px solid black; margin-right: 10px; color:white; text-shadow: 1px 1px gold;">{{request.session.highscore}}</h3>
+			<h3>{{request.session.score}}</h3>
+		</div>
+		<h1 style="text-align:center; margin:0;margin-top: -50px;">The Zoo Game</h1>
+		<h2 style="margin-bottom:5px;border-top:5px solid black;">{{request.session.avg}} Average Customers a Day</h2><br>
+		<div id="schmeckles">
+			<img src="{% static "Zoo_App/Shmeckles.png" %}" alt="Your Shmeckles"/>
+			<h2>Schmeckles:</h2><br><h2 style="margin-left:50px;">{{request.session.money}}</h2>
+		</div>
+		<span id='tickets'>
+			<h2>Ticket Cost: </h2><br><br>
+			<a href="/ticInc"><button style="padding:10px;background-color:blue;border:3px solid darkblue;border-radius:10px;color:white;margin:;font-weight:bolder;">Increase Ticket Cost</button></a><br>
+			<h1 style="margin:0px;">{{request.session.tickets}}</h1>
+			<a href="/ticDec"><button style="padding:10px;background-color:red;border:3px solid darkred;border-radius:10px;color:white;font-weight:bolder;">Decrease Ticket Cost</button></a>
+		</span>	
+		<div id="click">
+			<form action="/click">
+				<input type="image" src="{%static 'Zoo_App/day2night.png'%}" value="Click Me" alt="Click Me">		
+			</form>
+		</div>
+	</div>
+	<div id="days">
+		<h3>{{request.session.day}} Days left</h3>
+	</div>
+	<div id="workers">
+		<h1>Workers</h1>
+		<p>$3 per Worker<br> per Day</p>
+		<a href="/addWorkers"><button style="padding:5px;background-color:green;border:2px solid darkgreen;color:white;font-weight:bolder;letter-spacing:2px;margin-left:50px;">Hire</button></a>
+		<h2>{{request.session.workers}}</h2>
+		<a href="/subWorkers"><button style="padding:5px;background-color:red;border:2px solid darkred;color:white;font-weight:bolder;letter-spacing:2px;">Fire</button></a>
+	</div>
+
+	<div id="map">
+		<img src="{%static 'Zoo_App/map5.png'%}">
+		<div id="dolphCount">{{request.session.dolph}}</div>
+		<div id="polarCount">{{request.session.polar}}</div>
+		<div id="gorillaCount">{{request.session.gorilla}}</div>
+		<div id="dinoCount">{{request.session.dino}}</div>
+	</div>
+
+		<img  id="dolph" class="hide" src="{%static 'Zoo_App/dolph.png'%}">
+		<img  id="polar" class="hide" src="{%static 'Zoo_App/polarbear.png'%}">
+		<img  id="gorilla" class="hide" src="{%static 'Zoo_App/gorilla.png'%}">
+		<img  id="dino" class="hide" src="{%static 'Zoo_App/dino.png'%}">
+
+	<div id="animal">
+		<h1>Animals</h1>
+		<li><p>Add some animals to <span class="bold">attract more people.</span></p></li>
+		<table>
+		<tr>
+			<th><a href="/dolph"><button id="dolphBTN">Dolphin</button></a></th>
+			<th><a href="/polarBear"><button id="polarBTN">PolarBear</button></a></th>
+			<th><a href="/gorilla"><button id="gorillaBTN">Gorilla</button></a></th>
+			<th><a href="/dino"><button id="dinoBTN">Dino</button></a></th>
+		</tr>
+		<tr>
+			<td>
+				<p style="background-color:red;color:white;text-align:center;">Costs: ${{request.session.dolphCOST}}</p>
+				<p style="background-color:green;color:white;text-align:center;">Requires<br>{{request.session.dolphWORK}} Workers</p>
+				<p style="background-color:blue;color:white;text-align:center;"><span class="bold">+1</span> to<br>Average</p>
+			</td>
+			<td>
+				<p style="background-color:red;color:white;text-align:center;">Costs: ${{request.session.polarCOST}}</p>
+				<p style="background-color:green;color:white;text-align:center;">Requires<br>{{request.session.polarWORK}} Workers</p>
+				<p style="background-color:blue;color:white;text-align:center;"><span class="bold">+2</span> to<br>Average</p>
+			</td>
+			<td>
+				<p style="background-color:red;color:white;text-align:center;">Costs: ${{request.session.gorillaCOST}}</p>
+				<p style="background-color:green;color:white;text-align:center;">Requires<br>{{request.session.gorillaWORK}} Workers</p>
+				<p style="background-color:blue;color:white;text-align:center;"><span class="bold">+2</span> to<br>Average</p>
+			</td>
+			<td>
+				<p style="background-color:red;color:white;text-align:center;">Costs: ${{request.session.dinoCOST}}</p>
+				<p style="background-color:green;color:white;text-align:center;">Requires<br>{{request.session.dinoWORK}} Workers</p>
+				<p style="background-color:blue;color:white;text-align:center;"><span class="bold">+5</span> to<br>Average</p>
+			</td>
+		</tr>
+		</table>
+		<h1 style="background-color:darkred;">{{request.session.info}}</h1>
+	</div>
+		<br><a href="/HRDreset" style="padding:5px;margin-top:50px;position:absolute;bottom:-125px;"><button>HARD RESET</button></a><br>
+</body>
+</html>
